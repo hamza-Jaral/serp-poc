@@ -1,5 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.v1.endpoints import serp
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from the .env file
+load_dotenv()
 
 app = FastAPI(
     title="SERP POC",
@@ -17,6 +23,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy"}
+# Get the SERP API key from the environment variable
+SERP_API_KEY = os.getenv("SERP_API_KEY")
+
+
+app.include_router(serp.router, prefix="/api/v1")
