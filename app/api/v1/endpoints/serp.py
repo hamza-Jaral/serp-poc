@@ -58,6 +58,7 @@ async def fetch_and_write(query: str, api_key: str, temp_file):
     try:
         # Use asyncio.to_thread if serpapi.search is synchronous
         results = await asyncio.to_thread(serpapi.search, params)
+        print('results=>keys', results)
         ai_overview = results.get("ai_overview")
 
         if ai_overview is None:
